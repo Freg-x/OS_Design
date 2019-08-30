@@ -1611,9 +1611,9 @@ void ShowOsScreen()
 	printf("*   *         *                      *              *\n");
 	printf("*    *       *               *         *            *\n");
 	printf("*      * * *                   * * * *              *\n");
-	printf("*    WRITEEN BY          1753944  tantianran        *\n");
-	printf("*    WRITEEN BY          1552774  xumingyu          *\n");
-	printf("*    WRITEEN BY          1552778  guokecheng        *\n");
+	printf("*    WRITEEN BY          1753910  Ma Siteng        *\n");
+	printf("*    WRITEEN BY          1753948  Zhang Yao         *\n");
+	printf("*    WRITEEN BY          1751984  Wang Gefei        *\n");
 	printf("*****************************************************\n");
 }
 void ProcessManage()
@@ -2339,9 +2339,9 @@ void TestA()
 			else if (strcmp(rdbuf, "information") == 0)
 			{
 				printf("The OS Gorup is: \n");
-				printf("1453605 Tan tianran \n");
-				printf("1552774 Xu ming yu \n");
-				printf("1552778 Guo kecheng \n");
+				printf("1753910 Ma Siteng \n");
+				printf("1753948 Zhang Yao \n");
+				printf("1751984 Wang Gefei \n");
 			}
 			else if (strcmp(rdbuf, "process") == 0)
 			{
@@ -2470,6 +2470,9 @@ void TestA()
 			else if (strcmp(rdbuf, "2048") == 0) {
 				game2048(fd_stdin);
 			}
+            else if (strcmp(rdbuf, "box") == 0) {
+                Sokoban(fd_stdin);
+            }
 			else
 				printf("Command not found,please check!For more command information please use 'help' command.\n");
 		}
@@ -3650,5 +3653,201 @@ void game2048(int fd_stdin)
 	menu(fd_stdin);                     //调用主菜单函数
 
 }
+
+
+
+/*SokobanGame*/
+
+PUBLIC SokobanGame = 0;
+
+int box_map[8][8] = {
+    { 1,1,1,1,1,1,1,1 },
+    { 1,0,0,0,1,0,0,1 },
+    { 1,0,1,0,1,3,4,1 },
+    { 1,0,0,0,0,3,4,1 },
+    { 1,0,1,0,1,3,4,1 },
+    { 1,0,0,0,1,0,0,1 },
+    { 1,1,1,1,1,2,0,1 },
+    { 0,0,0,0,1,1,1,1 }
+};
+
+void Sokoban(int fd_stdin)
+{
+    while (!check()&&!SokobanGame) {
+        clrscr();
+        draw_box_map();
+	sleep(3);
+        box_move(fd_stdin);
+    }
+}
+
+void draw_box_map()
+{
+    int i, j;
+    for (i = 0; i < 8; i++) {
+        for (j = 0; j < 8; j++) {
+            switch (box_map[i][j]) {
+                case 0:
+                    printf(" ");
+                    break;
+                case 1:
+                    printf("#"); //wall
+                    break;
+                case 2:
+                    printf("i"); //man
+                    break;
+                case 3:
+                    printf("O"); //box
+                    break;
+                case 4:
+                    printf("X"); //box terminal
+                    break;
+                case 6:
+                    printf("I"); //man standing on the box terminal
+                    break;
+                case 7:
+                    printf("!");//box standing on the box terminal
+                    break;
+            }
+        }
+        printf("\n");
+    }
+}
+
+void box_move(int fd_stdin)
+{
+    int  x, y;
+    char op = getch(fd_stdin);
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            if (box_map[i][j] == 2 || box_map[i][j] == 6) {
+                x = i;
+                y = j;
+            }
+        }
+    }
+    switch (op)
+    {
+        case 'w':
+        case 'W':
+        case 72:
+            if (box_map[x - 1][y] == 0 || box_map[x - 1][y] == 4)
+            {
+                box_map[x][y] -= 2;
+                box_map[x - 1][y] += 2;
+            }
+            else if (box_map[x - 1][y] == 3 || box_map[x - 1][y] == 7)
+            {
+                if (box_map[x - 2][y] == 0 || box_map[x - 2][y] == 4)
+                {
+                    box_map[x][y] -= 2;
+                    box_map[x - 1][y] -= 1;
+                    box_map[x - 2][y] += 3;
+                }
+            }
+            break;
+        case 's':
+        case 'S':
+        case 80:
+            if (box_map[x + 1][y] == 0 || box_map[x + 1][y] == 4)
+            {
+                box_map[x][y] -= 2;
+                box_map[x + 1][y] += 2;
+            }
+            else if (box_map[x + 1][y] == 3 || box_map[x + 1][y] == 7)
+            {
+                if (box_map[x + 2][y] == 0 || box_map[x + 2][y] == 4)
+                {
+                    box_map[x][y] -= 2;
+                    box_map[x + 1][y] -= 1;
+                    box_map[x + 2][y] += 3;
+                }
+            }
+            break;
+        case 'a':
+        case 'A':
+        case  75:
+            if (box_map[x][y - 1] == 0 || box_map[x][y - 1] == 4)
+            {
+                box_map[x][y] -= 2;
+                box_map[x][y - 1] += 2;
+            }
+            else if (box_map[x][y - 1] == 3 || box_map[x][y - 1] == 7)
+            {
+                if (box_map[x][y - 2] == 0 || box_map[x][y - 2] == 4)
+                {
+                    box_map[x][y] -= 2;
+                    box_map[x][y - 1] -= 1;
+                    box_map[x][y - 2] += 3;
+                }
+            }
+            break;
+        case 'd':
+        case 'D':
+        case  77:
+            if (box_map[x][y + 1] == 0 ||box_map[x][y + 1] == 4)
+            {
+                box_map[x][y] -= 2;
+                box_map[x][y + 1] += 2;
+            }
+            else if (box_map[x][y + 1] == 3 || box_map[x][y + 1] == 7)
+            {
+                if (box_map[x][y + 2] == 0 || box_map[x][y + 2] == 4)
+                {
+                    box_map[x][y] -= 2;
+                    box_map[x][y + 1] -= 1;
+                    box_map[x][y + 2] += 3;
+                }
+            }
+            break;
+       /* case e:
+            box_map[8][8] = {
+                { 1,1,1,1,1,1,1,1 },
+                { 1,0,0,0,1,0,0,1 },
+                { 1,0,1,0,1,3,4,1 },
+                { 1,0,0,0,0,3,4,1 },
+                { 1,0,1,0,1,3,4,1 },
+                { 1,0,0,0,1,0,0,1 },
+                { 1,1,1,1,1,2,0,1 },
+                { 0,0,0,0,1,1,1,1 }
+            };
+            SokobanGame = 0;
+            clrscr();
+            break;*/
+    }
+}
+
+int check()
+{
+    int k = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        for (int j = 0; j < 8; j++)
+        {
+            if (box_map[i][j] == 3)
+                k++;
+        }
+    }
+    if (k == 0) {
+        printf("===========================================================\n");
+        printf("======================Congratulations======================\n");
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
