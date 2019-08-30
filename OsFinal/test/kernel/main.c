@@ -350,6 +350,7 @@ double my_atof(const char *str)
 	return s*(falg ? -1.0 : 1.0);
 }
 
+#define clrscr() clear()
 char snake_Array[17][30] =
 {
 	{ '=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','=','\n','\0' },
@@ -731,660 +732,62 @@ void checkHead(int x, int y) {
 		overOrNot = 1;
 	}
 }
-
-
-
-
-
-struct MAO_type//MAO类型
+int zzz = 1;
+int rand()
 {
-	char variable_type[10];
-	char variable_name[10];
-	int variable_value;
-	struct MAO_type *next;
-};
-struct num_op//中缀表达式转后缀表达式，用于存储后缀表达式的结构体
-{
-	int num;
-	char op;
-	int sign;
-	struct num_op *next;
-};
-struct stack_num//数据栈
-{
-	int data;
-	struct stack_num *next;
-};
-struct stack_sign//数据计算类型栈
-{
-	int sign;
-	struct stack_sign *next;
-};
-struct stack_op//操作符栈
-{
-	char op;
-	struct stack_op *next;
-};
-struct stack_sign *creat_stack_sign()// 数据类型栈初始化链栈
-{
-	struct stack_sign *top;
-	top = (struct stack_sign *)malloc(sizeof(struct stack_sign));
-	top->next = NULL;
-	return(top);
-}
-struct stack_sign *push_sign(struct stack_sign *top, int x)//数据类型栈 x进栈
-{
-	struct stack_sign *p;
-	p = (struct stack_sign *)malloc(sizeof(struct stack_sign));
-	p->sign = x;
-	p->next = top->next;
-	top->next = p;
-	return(top);
-}
-struct stack_sign *out_sign(struct stack_sign *top)//数据类型栈出栈操作
-{
-	struct stack_sign *p;
-	if (top->next == NULL)
+	if (zzz % 10 == 1)
 	{
-		printf("the stack is NULL!\n");
-		return(top);
+		zzz++;
+		return 145;
 	}
-	p = top->next;
-	top->next = p->next;
-	free(p);
-	return(top);
-}
-struct stack_op  *creat_stack_op()// 操作栈初始化链栈
-{
-	struct stack_op *top;
-	top = (struct stack_op *)malloc(sizeof(struct stack_op));
-	top->next = NULL;
-	return(top);
-}
-struct stack_op *push(struct stack_op *top, char x)//操作栈 x进栈
-{
-	struct stack_op *p;
-	p = (struct stack_op *)malloc(sizeof(struct stack_op));
-	p->op = x;
-	p->next = top->next;
-	top->next = p;
-	return(top);
-}
-struct stack_op *out(struct stack_op *top)//操作栈出栈操作
-{
-	struct stack_op *p;
-	if (top->next == NULL)
+	else if (zzz % 10 == 2)
 	{
-		printf(" the stack is NULL!\n");
-		return(top);
+		zzz++;
+		return 261;
 	}
-	p = top->next;
-	top->next = p->next;
-	free(p);
-	return(top);
-}
-struct stack_num *creat_stack_num()// 数据栈初始化链栈
-{
-	struct stack_num *top;
-	top = (struct stack_num *)malloc(sizeof(struct stack_num));
-	top->next = NULL;
-	return(top);
-}
-struct stack_num *push_num(struct stack_num *top, int x)//数据栈 x进栈
-{
-	struct stack_num *p;
-	p = (struct stack_num *)malloc(sizeof(struct stack_num));
-	p->data = x;
-	p->next = top->next;
-	top->next = p;
-	return(top);
-}
-struct stack_num *out_num(struct stack_num *top)//数据栈出栈操作
-{
-	struct stack_num *p;
-	if (top->next == NULL)
+	else if (zzz % 10 == 3)
 	{
-		printf("the stack is NULL!\n");
-		return(top);
+		zzz++;
+		return 84;
 	}
-	p = top->next;
-	top->next = p->next;
-	free(p);
-	return(top);
-}
-
-void num_display(struct num_op *head)
-{
-	struct num_op *p;
-	p = head;
-	while (p != NULL)
+	else if (zzz % 10 == 4)
 	{
-		if (p->op == '#')
-		{
-			printf(" %f ", p->num);
-			p = p->next;
-		}
-		else
-		{
-			printf(" %c ", p->op);
-			p = p->next;
-		}
+		zzz++;
+		return 125;
+	}
+	else if (zzz % 10 == 5)
+	{
+		zzz++;
+		return 127;
+	}
+	else if (zzz % 10 == 6)
+	{
+		zzz++;
+		return 126;
+	}
+	else if (zzz % 10 == 7)
+	{
+		zzz++;
+		return 54;
+	}
+	else if (zzz % 10 == 8)
+	{
+		zzz++;
+		return 98;
+	}
+	else if (zzz % 10 == 9)
+	{
+		zzz++;
+		return 18;
+	}
+	else if (zzz % 10 == 0)
+	{
+		zzz++;
+		return 19;
 	}
 }
-int num_change(int a, int b, char op, int a1, int b1, int *sign)//对两个数字进行计算，返回结果
-{
-	int m, n;
-	if ((op == '/') && (a == 0))//出现'/'且被除数为零，即除零错误——>程序停止，输出”divided by zero"；
-	{
-		printf("%s\n", "divided by ZERO");
-		return;
-	}
-	if ((a1 == 1) || (b1 == 1))//两个操作数中至少一个为浮点型；
-	{
-		sign = 1;//计算完毕后的数值的数字类型（此时为1，即浮点型）
-		switch (op)
-		{
-		case'+':return b + a;
-		case'-':return b - a;
-		case'*':return b*a;
-		case'/':return b / a;
-		case'=':return a;
-		default:return 0;
-		}
-	}
-	else//两个操作数都为整形，强制转换，然后进行计算求值，返回
-	{
-		sign = 0;//计算完毕后的数值的数字类型（此时为0，即整型）
-		m = (int)a;
-		n = (int)b;
-		switch (op)
-		{
-		case'+':return n + m;
-		case'-':return n - m;
-		case'*':return n*m;
-		case'/':return n / m;
-		case'=':return m;
-		default:return 0;
-		}
-	}
-}
-int change(char* orig, int MAO, struct MAO_type *MAO_head, int *num_of_varible, int *done_of_varible)// 用于将表达式转化为逆波兰然后求值的函数
-{
-	int l = MAO;
-	struct num_op *head, *p, *p1;// head ,p,p1为 num_op 型指针
-	struct stack_op *top_op;// top_op 为 stack_op 的头指针
-	struct stack_num *top_num;// top_num 为 stack_num 的头指针
-	struct stack_sign *top_sign;// top_sign 为 stack_sign 的头指针
-	struct MAO_type *fp;//fp 为mao类型变量的指针，用于进行变量的数值判断
-	int n = 1;//用于计数，看p是否为头元素
-	int q = 0;//用于判断‘-’之前是否有操作数，没有的话，加一个0；
-	int left = 0;//用于计数左括号个数
-	int right = 0;//用于计数右括号个数
-	int a;//用于存储待计算的第一个数字的数值
-	int b;//用于存储待计算的第二个数字的数值
-	char name[20];//存储变量名
-	int i = 0;//与name数组匹配，用于变量名计数
-	int it_name = 0;//用于判断读到的是变量名，还是直接就是一个数字
-	char single[80];//用于以字符形式读入数字，判断是否有'.'，然后用my_atoi函数进行转换
-	int s = 0;//与single数组匹配的，用于计数
-	int a1 = 0;//用于存储待计算的第一个数字的数字类型(1为浮点型），（0为整型）
-	int b1 = 0;//用于存储待计算的第二个数字的数字类型(1为浮点型），（0为整型）
-	int sign;//用于返回计算后的数值的数字类型(1为浮点型）,(0为整型)
-	top_op = creat_stack_op();//初始化操作符栈
-	char ch = orig[l];//读取文件信息
-	l++;
-	fp = (struct MAO_type *)malloc(sizeof(struct MAO_type));
-	p = p1 = (struct num_op *)malloc(sizeof(struct num_op));
-	num_of_varible = 1;
-	head = NULL;
-	if ((ch == ' ') || (ch == '='))
-	{
-		ch = orig[l];
-		l++;
-	}
 
-	while (ch != ';')
-	{
-		if ((ch >= '0') && (ch <= '9') && (it_name == 0))
-		{
-			p->sign = 0;
-			while ((ch != '+') && (ch != '-') && (ch != '/') && (ch != '*') && (ch != '=') && (ch != ';') && (ch != '(') && (ch != ')') && (ch != ' '))
-			{
-				single[s] = ch;
-				s++;
-				if (ch == '.')
-					p->sign = 1;
-				ch = orig[l];
-				l++;
-			}
-			single[s] = '\0';
-			s = 0;
-			if (p->sign == 0)
-			{
-				p->num = my_atoi(single);
-				p->num = (int)p->num;
-			}
-			else
-			{
-				p->num = my_atoi(single);
-			}
-			p->op = '#';
-			q = 1;
-			if (n == 1)
-			{
-				head = p;
-				n++;
-				p1 = p;
-				p = (struct num_op *)malloc(sizeof(struct num_op));
-			}
-			else
-			{
-				p1->next = p;
-				p1 = p;
-				p = (struct num_op *)malloc(sizeof(struct num_op));
-				n++;
-			}
-			l--;
-			ch = orig[l];
-			l++;
-		}
-		else if ((ch == '-') && (q == 0))
-		{
-			p->num = 0.0;
-			p->sign = 1;
-			p->op = '#';
-			if (n == 1)
-			{
-				head = p;
-				n++;
-				p1 = p;
-				p = (struct num_op *)malloc(sizeof(struct num_op));
-			}
-			else
-			{
-				p1->next = p;
-				p1 = p;
-				p = (struct num_op *)malloc(sizeof(struct num_op));
-				n++;
-			}
-			top_op = push(top_op, ch);
-			ch = orig[l];
-			l++;
-		}
-		else if (ch == ' ')
-		{
-			ch = orig[l];
-			l++;
-		}
-		else if (ch == '(')
-		{
-			top_op = push(top_op, ch);
-			ch = orig[l];
-			l++;
-			left++;
 
-		}
-		else if (ch == ')')
-		{
-			right++;
-			if (right != left)
-			{
-				char k = '(';
-				top_op = push(top_op, k);
-			}
-
-			if (it_name == 1)
-			{
-				name[i] = '\0';
-				i = 0;
-				it_name = 0;
-				fp = MAO_head;
-				while (fp->variable_name != NULL)
-				{
-					if (strcmp(fp->variable_name, name) == 0)
-					{
-						if (strcmp(fp->variable_type, "int") == 0)
-						{
-							p->num = (int)fp->variable_value;
-							p->sign = 0;
-						}
-						else
-						{
-							p->num = fp->variable_value;
-							p->sign = 1;
-						}
-						p->op = '#';
-						if (n == 1)
-						{
-							head = p;
-							n++;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-						}
-						else
-						{
-							p1->next = p;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-							n++;
-						}
-						break;
-					}
-					else
-						fp = fp->next;
-				}
-			}
-			while ((top_op->next->op) != '(')
-			{
-				p->op = top_op->next->op;
-				if (n == 1)
-				{
-					head = p;
-					n++;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-				}
-				else
-				{
-					p1->next = p;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-					n++;
-				}
-				top_op = out(top_op);
-			}
-			top_op = out(top_op);
-			ch = orig[l];
-			l++;
-		}
-		else if ((ch == '-') || (ch == '+') || (ch == '*') || (ch == '/') || (ch == '='))
-		{
-			if (it_name == 1)
-			{
-				name[i] = '\0';
-				i = 0;
-				it_name = 0;
-				fp = MAO_head;
-				while (fp->variable_name != NULL)
-				{
-					if (strcmp(fp->variable_name, name) == 0)
-					{
-						if (strcmp(fp->variable_type, "int") == 0)
-						{
-							p->num = (int)fp->variable_value;
-							p->sign = 0;
-						}
-						else
-						{
-							p->num = fp->variable_value;
-							p->sign = 1;
-						}
-						p->op = '#';
-						if (n == 1)
-						{
-							head = p;
-							n++;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-						}
-						else
-						{
-							p1->next = p;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-							n++;
-						}
-						break;
-					}
-					else
-						fp = fp->next;
-				}
-			}
-			if (top_op->next == NULL)
-			{
-				if (ch == '=')
-				{
-					num_of_varible++;
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-				else
-				{
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-			}
-			if ((top_op->next->op) == '(')
-			{
-				if (ch == '=')
-				{
-					num_of_varible++;
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-				else
-				{
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-			}
-			if (ch == '=')
-			{
-				num_of_varible++;
-				top_op = push(top_op, ch);
-				q = 0;
-				ch = orig[l];
-				l++;
-			}
-
-			if ((ch == '*') || (ch == '/'))
-			{
-				if (((top_op->next->op) == '-') || ((top_op->next->op) == '+') || (top_op->next->op == '='))
-				{
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-				else if (((top_op->next->op) == '*') || ((top_op->next->op) == '/'))
-				{
-					while ((top_op->next != NULL) && (top_op->next->op != '-') && (top_op->next->op != '+') && (top_op->next->op != '='))
-					{
-						p->op = top_op->next->op;
-						if (n == 1)
-						{
-							head = p;
-							n++;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-						}
-						else
-						{
-							p1->next = p;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-							n++;
-						}
-						top_op = out(top_op);
-					}
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-			}
-			else if ((ch == '-') && (q == 0))
-			{
-				p->num = 0.0;
-				p->sign = 1;
-				p->op = '#';
-				if (n == 1)
-				{
-					head = p;
-					n++;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-				}
-				else
-				{
-					p1->next = p;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-					n++;
-				}
-				top_op = push(top_op, ch);
-				ch = orig[l];
-				l++;
-			}
-			else if ((ch == '-') || (ch == '+'))
-			{
-				if (top_op->next->op == '=')
-				{
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-				else
-				{
-					while ((top_op->next != NULL) && (top_op->next->op != '='))
-					{
-						p->op = top_op->next->op;
-						if (n == 1)
-						{
-							head = p;
-							n++;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-						}
-						else
-						{
-							p1->next = p;
-							p1 = p;
-							p = (struct num_op *)malloc(sizeof(struct num_op));
-							n++;
-						}
-						top_op = out(top_op);
-					}
-					top_op = push(top_op, ch);
-					q = 0;
-					ch = orig[l];
-					l++;
-				}
-			}
-		}
-		else
-		{
-			name[i] = ch;
-			i++;
-			ch = orig[l];
-			l++;
-			q = 1;
-			it_name = 1;
-		}
-	}
-	if (it_name == 1)
-	{
-		name[i] = '\0';
-		i = 0;
-		it_name = 0;
-		fp = MAO_head;
-		while (fp->variable_name != NULL)
-		{
-			if (strcmp(fp->variable_name, name) == 0)
-			{
-				if (strcmp(fp->variable_type, "int") == 0)
-				{
-					p->num = (int)fp->variable_value;
-					p->sign = 0;
-				}
-				else
-				{
-					p->num = fp->variable_value;
-					p->sign = 1;
-				}
-				p->op = '#';
-				if (n == 1)
-				{
-					head = p;
-					n++;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-				}
-				else
-				{
-					p1->next = p;
-					p1 = p;
-					p = (struct num_op *)malloc(sizeof(struct num_op));
-					n++;
-				}
-				break;
-			}
-			else
-				fp = fp->next;
-		}
-	}
-	while (top_op->next != NULL)
-	{
-		p->op = top_op->next->op;
-		if (n == 1)
-		{
-			head = p;
-			n++;
-			p1 = p;
-			p = (struct num_op *)malloc(sizeof(struct num_op));
-		}
-		else
-		{
-			p1->next = p;
-			p1 = p;
-			p = (struct num_op *)malloc(sizeof(struct num_op));
-			n++;
-		}
-		top_op = out(top_op);
-	}///////转换为逆波兰表达式
-	p1->next = NULL;
-	p = head;
-	top_num = creat_stack_num();
-	top_sign = creat_stack_sign();
-	while (p != NULL)
-	{
-		if (p->op == '#')
-		{
-			top_num = push_num(top_num, p->num);
-			top_sign = push_sign(top_sign, p->sign);
-			p = p->next;
-		}
-		else if (p->op != '#')
-		{
-			a = top_num->next->data;
-			a1 = top_sign->next->sign;
-
-			top_sign = out_sign(top_sign);
-			top_num = out_num(top_num);
-
-			b = top_num->next->data;
-			b1 = top_sign->next->sign;
-
-			top_sign = out_sign(top_sign);
-			top_num = out_num(top_num);
-
-			top_num = push_num(top_num, num_change(a, b, p->op, a1, &b1, &sign));
-			top_sign = push_sign(top_sign, sign);
-			p = p->next;
-		}
-	}
-	done_of_varible++;
-	return(top_num->next->data);
-}
 
 /*****************************************************************************
 *                                untar
@@ -1591,12 +994,11 @@ void help()
 	printf("3. clear         : Clear the screen\n");
 	printf("4. help          : Show this help message\n");
 	printf("5. guessNumber   : Run a simple number guess game\n");
-	printf("6. compile       : Run a small Compile on this OS\n");
 	printf("6. maze          : Run a maze game\n");
 	printf("7. information   : Show students' information\n");
-	printf("9. snake         : Play a greedy eating Snake\n");
-	printf("10.wuziChess     : Play a chess game with AI\n");
-	printf("11.2048     	 : Play a 2048 game \n");
+	printf("8. snake         : Play a greedy eating Snake\n");
+	printf("9. 2048          : Play a 2048 game\n");
+	printf("10.box           : Play a push box game\n");
 	printf("==============================================================================\n");
 }
 void ShowOsScreen()
@@ -1611,11 +1013,87 @@ void ShowOsScreen()
 	printf("*   *         *                      *              *\n");
 	printf("*    *       *               *         *            *\n");
 	printf("*      * * *                   * * * *              *\n");
-	printf("*    WRITEEN BY          1753910  Ma Siteng        *\n");
+	printf("*    WRITEEN BY          1753910  Ma Siteng         *\n");
 	printf("*    WRITEEN BY          1753948  Zhang Yao         *\n");
 	printf("*    WRITEEN BY          1751984  Wang Gefei        *\n");
 	printf("*****************************************************\n");
 }
+void printProcess()
+{
+	if (schedule_flag == RR_SCHEDULE)
+	{
+		for (int i = 6; i < 9; i++)
+		{
+			if (proc_table[i].p_runable)
+			{
+				switch (i)
+				{
+				case 6:
+					out_char(tty_table[1].console, 'A');
+					break;
+				case 7:
+					out_char(tty_table[1].console, 'B');
+					break;
+				case 8:
+					out_char(tty_table[1].console, 'C');
+					break;
+
+				}
+				//delay(20);
+			}
+		}
+	}
+	else if (schedule_flag == PRIO_SCHEDULE)
+	{
+		int greatest_ticks = 0, p_proc_ready = 0;
+		while (!greatest_ticks)
+		{
+			for (int i = 6; i < 9; i++)
+			{
+				if (proc_table[i].p_runable)
+				{
+					if (proc_table[i].ticks > greatest_ticks)
+					{
+						greatest_ticks = proc_table[i].ticks;
+						p_proc_ready = i;
+					}
+				}
+			}
+			if (!greatest_ticks)
+			{
+				for (int i = 6; i < 9; i++)
+				{
+					if (proc_table[i].p_runable)
+					{
+						proc_table[i].ticks = proc_table[i].priority;
+					}
+				}
+			}
+		}
+		switch (p_proc_ready)
+		{
+		case 6:
+			out_char(tty_table[1].console, 'A');
+			//delay(20);
+			proc_table[6].ticks--;
+			break;
+		case 7:
+			out_char(tty_table[1].console, 'B');
+			//delay(20);
+			proc_table[7].ticks--;
+			break;
+		case 8:
+			out_char(tty_table[1].console, 'C');
+			//delay(20);
+			proc_table[8].ticks--;
+			break;
+		default:
+			break;
+		}
+	}
+
+}
+
 void ProcessManage()
 {
 	clear();
@@ -1627,7 +1105,7 @@ void ProcessManage()
 
 		printf("          ===== %s ========%2d=======",
 			proc_table[i].name,
-			proc_table[i].priority / 10);
+			proc_table[i].priority);
 		if (proc_table[i].p_runable) {
 			printf("running===========");
 		}
@@ -1705,8 +1183,8 @@ void UpPriority(int num)
 	}
 	else
 	{
-		proc_table[num].priority = proc_table[num].priority + 100;
-
+		proc_table[num].priority = proc_table[num].priority + 10;
+		proc_table[num].ticks = proc_table[num].priority;
 		out_char(tty_table[1].console, 'A');
 		out_char(tty_table[1].console, '\n');
 	}
@@ -1720,8 +1198,8 @@ void DownPriority(int num)
 	}
 	else
 	{
-		proc_table[num].priority = proc_table[num].priority - 100;
-
+		proc_table[num].priority = proc_table[num].priority - 10;
+		proc_table[num].ticks = proc_table[num].priority;
 		out_char(tty_table[1].console, '\n');
 		out_char(tty_table[1].console, '\n');
 	}
@@ -1780,7 +1258,7 @@ void FileSystem(int fd_stdin, int fd_stdout)
 		else if (strcmp(rdbuf, "exit") == 0)
 		{
 			clear();
-			ShowOsScreen();
+			help();
 			break;
 		}
 		else
@@ -1956,307 +1434,6 @@ void FileSystem(int fd_stdin, int fd_stdout)
 }
 
 
-void Compile(char* orig)								//编译函数，处理输入内容
-{
-	//printf("In the COmpile:\n");
-	//printf(orig);
-	int l = 0;
-	char *MAO;										//文件指针
-	struct MAO_type *p, *head, *f;					//MAO_type型结构体
-	char ch;										//用于逐个读入文件内容
-	char name[20];									//用于输入mao文件名字
-	char s[20];										//用于存放最开始读到的字符串
-	char m[20];										//用于print语句输出时，存放括号内的变量名
-	int i = 0;										//用于与s数组的匹配
-	int j = 0;										//用于与m数组的匹配
-	int n = 1;										//用于结构体链表建立的计数
-	int num_of_varible = 1;							//初始默认表达式中只有一个变量
-	int done_of_varible = 0;							//初始默认表达式中无已计算完毕的变量
-	int directe = 0;								//用于print语句的输出
-	int equality;								//用于出现无等号表达式的计算
-	int no_equal = 0;									//用于判断表达式中是否有等号
-	int pr = 0;										//用于判断print括号中是数字还是变量
-	int i_d = 0;										//判断读入的数字的类型
-	int home;									//初始记录home的位置
-	f = p = (struct MAO_type *)malloc(sizeof(struct MAO_type));
-	head = NULL;
-	//printf("please put in the name of mao file: \n");
-	//scanf("%s",name);
-	ch = orig[0];
-	l++;
-	//printf("The ch is:\n");
-	//while((My_read(orig,ch,l)) != NULL)
-	for (; ch != NULL; ch = orig[l], l++)
-	{
-		while ((ch == '\n') || ((ch == ' ') && (i == 0)) || (ch == '\r') || ((ch == '(') && (i == 0)))
-		{
-			ch = orig[l];
-			l++;
-		}
-		if (((ch >= 'a') && (ch <= 'z')) || ((ch >= 'A') && (ch <= 'Z')) || ((ch >= '0') && (ch <= '9') && (i != 0)))
-		{
-			//printf("%c\n",ch);
-			s[i] = ch;
-			i++;
-			//l++;		
-		}
-		else
-		{
-			s[i] = '\0';
-			//printf("S is :%s\n",s);
-			if ((strcmp(s, "int") == 0) || (strcmp(s, "double") == 0))// 定义变量部分
-			{
-				strcpy(p->variable_type, s);
-				p->variable_value = 0.0;
-				while (ch != ';')
-				{
-					if (ch == ',')
-					{
-						ch = orig[l];
-						l++;
-						strcpy(p->variable_type, s);
-						p->variable_value = 0.0;
-					}
-					while ((ch != ',') && (ch != ';'))
-					{
-						if (ch == ' ')
-						{
-							ch = orig[l];
-							l++;
-						}
-						else
-						{
-							p->variable_name[j] = ch;
-							j++;
-							ch = orig[l];
-							l++;
-						}
-					}
-					p->variable_name[j] = '\0';
-					//printf("%s..%s...%d\n",p->variable_name,p->variable_type,p->variable_value);
-					j = 0;
-					if (n == 1)
-					{
-						head = p;
-						//printf("head%s..%s...%d\n",head->variable_name,head->variable_type,head->variable_value);
-						n++;
-						f = p;
-						p = (struct MAO_type *)malloc(sizeof(struct MAO_type));
-					}
-					else
-					{
-						f->next = p;
-						f = p;
-						p = (struct MAO_type *)malloc(sizeof(struct MAO_type));
-						n++;
-					}
-				}
-				for (int jx = 0; jx<i; jx++)
-				{
-					s[jx] = ' ';
-				}
-				i = 0;
-				//ch=orig[l];
-				//l++;
-			}
-			else if (strcmp(s, "print") == 0)
-			{
-				//printf("XXXXXXXXXX\n");
-				//printf("%s\n",s);
-				while ((ch == '(') || (ch == ' ') || (ch == '\r'))
-				{
-					ch = orig[l];
-					l++;
-				}
-				while (ch != ')')
-				{
-					if ((ch == ' ') || (ch == '\n'))
-					{
-						ch = orig[l];
-						l++;
-					}
-					else if ((ch >= '0') && (ch <= '9') && (pr == 0))
-					{
-						i_d = 0;
-						while ((ch != ' ') && (ch != ')'))
-						{
-							m[j] = ch;
-							j++;
-							if (ch == '.')
-								i_d = 1;
-							ch = orig[l];
-							l++;
-						}
-						m[j] = '\0';
-						j = 0;
-						//printf("ZZZZ:%s\n",m);
-						directe = my_atoi(m);
-						//printf("DDDD:%d\n",my_atoi(m));	
-						if (i_d == 1)
-						{
-							printf("The print is:%d\n", directe);
-						}
-						else
-						{
-							directe = (int)directe;
-							printf("The print is:%d\n", directe);
-						}
-					}
-					else
-					{
-						m[j] = ch;		//m[j]==a;
-						j++;
-						pr = 1;
-						ch = orig[l];
-						l++;
-					}
-				}
-				m[j] = '\0';
-				j = 0;
-				p = head;
-				//printf("%s..%s...%d\n",p->variable_name,p->variable_type,p->variable_value);
-				if (p->variable_name == NULL)
-				{
-					printf("P is NULL\n");
-				}
-				else
-				{
-					printf("P is not NULL\n");
-				}
-				while (p->variable_name != NULL)
-				{
-					//printf("biaoji1\n");
-					if (strcmp(p->variable_name, m) == 0)
-					{
-						//printf("biaoji2\n");
-						if (strcmp(p->variable_type, "int") == 0)
-						{
-							p->variable_value = (int)p->variable_value;
-							printf("The print is:%d\n", p->variable_value);/////////修改,别删
-							break;
-						}
-						else
-						{
-							printf("The print is:%d\n", p->variable_value);
-							break;
-						}
-					}
-					p = p->next;
-				}
-				while (ch != ';')
-				{
-					ch = orig[l];
-					l++;
-				}
-				i = 0;
-				ch = orig[l];
-				l++;
-			}
-			else //出现不为int,double,print 的情况
-			{
-				no_equal = 0;
-				home = l - 1;//记录初始位置
-				f->next = NULL;
-				p = head;
-				done_of_varible = 0;
-				while ((ch == ' ') || ((ch != ';') && (ch != '=')))
-				{
-					ch = orig[l];
-					l++;
-				}
-				if (ch == '=')
-				{
-					no_equal = 1;
-					do
-					{
-						p = head;
-						while (p->variable_name != NULL)
-						{
-							if (strcmp(s, p->variable_name) == 0)
-							{
-								p->variable_value = change(orig, l, head, &num_of_varible, &done_of_varible);
-								if (strcmp(p->variable_type, "int") == 0)
-									p->variable_value = (int)p->variable_value;
-								break;
-							}
-							else
-								p = p->next;
-						}
-						if (num_of_varible>1)
-						{
-							l = home;//指针返回本行初始位置							
-									 //fseek(MAO,-2L,1);							
-							ch = orig[l];
-							l++;
-							int times = 0;
-							while (times<done_of_varible)
-							{
-								if (ch != '=')
-								{
-									ch = orig[l];
-									l++;
-								}
-								else
-								{
-									times++;
-									ch = orig[l];
-									l++;
-								}
-							}
-							while (ch != '=')
-							{
-								i = 0;
-								while ((ch != '=') && (ch != '+') && (ch != '-') && (ch != '/') && (ch != '*'))
-								{
-									if ((ch == ' ') || (ch == '('))
-									{
-										ch = orig[l];
-										l++;
-									}
-									else
-									{
-										s[i] = ch;
-										i++;
-										ch = orig[l];
-										l++;
-									}
-								}
-								if (ch == '=')
-								{
-									s[i] = '\0';
-								}
-								else
-								{
-									ch = orig[l];
-									l++;
-								}
-							}
-						}
-					} while (num_of_varible != 1);
-				}
-				if (no_equal == 0)
-				{
-					l = home;//指针返回初始位置
-					ch = orig[l];
-					l++;
-					while (ch != ';')
-					{
-						//fseek(MAO,-3L,1);
-						ch = orig[l];
-						l++;
-					}
-					ch = orig[l];
-					l++;
-					equality = change(orig, l, head, &num_of_varible, &done_of_varible);
-				}
-				ch = orig[l];
-				l++;
-				i = 0;
-			}
-		}
-	}
-	//return 0;
-}
 
 /*======================================================================*
 TestA
@@ -2265,6 +1442,10 @@ void TestA()
 {
 	int fs_flag = 0;			//文件管理flag, 1为进入文件管理模块，0为未进入
 	int pm_flag = 0;			//进程调度flag，1为进入进程调度模块，0为未进入
+	for (int k = 6; k<9; k++)
+	{
+		proc_table[k].ticks = 0;
+	}
 	int i = 0;
 	/*while (1) {
 	printf("<Ticks:%x>", get_ticks());
@@ -2323,6 +1504,7 @@ void TestA()
 					else if (num == number_to_guess)
 					{
 						printf("Congratulation.....It is this!\n");
+						help();
 						break;
 					}
 				}
@@ -2371,6 +1553,10 @@ void TestA()
 				}
 				else if (strcmp(rdbuf, "pause all") == 0)
 				{
+					for (int k = 0; k<100; k++)
+					{
+						printProcess();
+					}
 					proc_table[6].p_runable = 0;
 					proc_table[7].p_runable = 0;
 					proc_table[8].p_runable = 0;
@@ -2433,25 +1619,13 @@ void TestA()
 				{
 					pm_flag = 0;
 					clear();
+					help();
 				}
 				else
 				{
 					printf("not such command for process management!!\n");
 					ProcessManage();
 				}
-			}
-			else if (strcmp(rdbuf, "compile") == 0)
-			{
-				clear();
-				printf("======      Welcome Use mao Compile!      ======\n");
-				printf("======Please input expression in one line!======\n");
-				char cdbuf[256];
-				int r = read(fd_stdin, cdbuf, 70);
-				cdbuf[r] = 0;
-				//printf(cdbuf);
-				//printf("\n");
-				//printf("************\n");
-				Compile(&cdbuf);
 			}
 			else if (strcmp(rdbuf, "snake") == 0)
 			{
@@ -2464,15 +1638,12 @@ void TestA()
 				snake_head[1] = 2;
 				Maze();
 			}
-			else if (strcmp(rdbuf, "wuziChess") == 0) {
-				wuziChess(fd_stdin);
-			}
 			else if (strcmp(rdbuf, "2048") == 0) {
 				game2048(fd_stdin);
 			}
-            else if (strcmp(rdbuf, "box") == 0) {
-                Sokoban(fd_stdin);
-            }
+			else if (strcmp(rdbuf, "box") == 0) {
+				Sokoban(fd_stdin);
+			}
 			else
 				printf("Command not found,please check!For more command information please use 'help' command.\n");
 		}
@@ -2538,84 +1709,6 @@ PUBLIC void panic(const char *fmt, ...)
 }
 
 
-/*****************************************************************************
-五子棋游戏
-******************************************************************************/
-
-#define H 28         //H为奇数,棋盘大小
-#define up 'w'
-#define down 's'
-#define left 'a'
-#define right 'd'
-#define ok 'j'		//落子是j
-//#define clrscr() system("cls") 
-#define clrscr() clear()
-int x, y, nextx, nexty, wint, turn, now, you, maxm = 0, maxy = 0, maxmcoordx = 0, maxmcoordy = 0, maxycoordx = 0, maxycoordy = 0, map[H][H];
-void redraw()
-{
-	clrscr();
-	//clear();
-	int i, j;
-	for (i = 0; i<H; i++)
-		for (j = 0; j<H; j++)
-			map[i][j] = 9;
-	x = H / 2, y = H / 2;
-	for (i = 4; i<H - 4; i++)
-		for (j = 4; j<H - 4; j++)
-			map[i][j] = 4;
-	map[x][y] = 3;
-}
-void drawMap()
-{
-	int i, j;
-	for (i = 4; i<H - 4; i++)
-	{
-		for (j = 4; j<H - 4; j++)
-		{
-			if (map[i][j] == 4)
-			{
-				if (i == 4 && j == 4) printf("\t+");
-				else if (i == 4 && j == H - 5) printf("+");
-				else if (i == H - 5 && j == 4) printf("\t+");
-				else if (i == H - 5 && j == H - 5) printf("+");
-				else
-				{
-					switch (j)
-					{
-					case H - 5:printf("+"); break;
-					case 4:printf("\t+"); break;
-					default:
-						switch (i)
-						{
-						case 4:printf("+"); break;
-						case H - 5:printf("+"); break;
-						default:printf("+"); break;
-						}
-						break;
-					}
-				}
-			}
-			if (map[i][j] == 1)
-				printf("X");
-			//printf("●");
-			if (map[i][j] == 0)
-				printf("O");
-			if (map[i][j] == 3)
-				printf("@");
-		}
-		printf("\n");
-	}
-	printf("\n\n\n\tUse 'w' 'a' 's' 'd' for moving,and 'j' for chess.\n");
-	sleep(12);
-}
-void swap()
-{
-	int temp;
-	temp = map[nextx][nexty];
-	map[nextx][nexty] = map[x][y];
-	map[x][y] = temp;
-	x = nextx, y = nexty;
-}
 char getch(int fd_stdin)
 {
 	//char rdbuf[128];
@@ -2628,608 +1721,11 @@ char getch(int fd_stdin)
 	chessMan = 'n';
 	return s;
 }
-char _getch(int fd_stdin)
-{
-	char rdbuf[128];
-	int r = read(fd_stdin, rdbuf, 70);
-	rdbuf[r] = 0;
-	return my_atoi(rdbuf);
-}
 
 
-void playchoice(int fd_stdin)
-{
-	void AI();
-	int t = 0;
-	char i;
-one:
-	//while(!kbhit())
-	/*while(listenerStart == 0)
-	{
-	i=getch(fd_stdin);
-	if (i==up||i==down||i==left||i==right||i==ok)
-	break;
-	}*/
-	i = getch(fd_stdin);
-	//while(kbhit())
-	//while(listenerStart == 1)
-	//{
-	//	i=getch(fd_stdin);
-	//}
-	printf("i now is: %c\n.", i);
-
-	switch (i)
-	{
-	case left:             /*第一个if防止光标和黑白子交换，第二个if防止当前坐标变成黑白子，跟着走*/
-		nextx = x;
-		if (y == 4)
-			goto one;
-		else
-			nexty = y - 1;
-		if (map[x][y] == 1 || map[x][y] == 0)
-		{
-			if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-				;
-			else
-				map[nextx][nexty] = 3;
-			x = nextx, y = nexty;
-			break;
-		}
-		if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-		{
-			map[x][y] = 4;
-			x = nextx, y = nexty;
-			break;
-		}
-		swap(); break;
-	case right:
-		nextx = x;
-		if (y == H - 5)
-			goto one;
-		else
-			nexty = y + 1;
-		if (map[x][y] == 1 || map[x][y] == 0)
-		{
-			if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-				;
-			else
-				map[nextx][nexty] = 3;
-			x = nextx, y = nexty;
-			break;
-		}
-		if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-		{
-			map[x][y] = 4;
-			x = nextx, y = nexty;
-			break;
-		}
-		swap(); break;
-	case up:
-		if (x == 4)
-			goto one;
-		else
-			nextx = x - 1;
-		nexty = y;
-		if (map[x][y] == 1 || map[x][y] == 0)
-		{
-			if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-				;
-			else
-				map[nextx][nexty] = 3;
-			x = nextx, y = nexty;
-			break;
-		}
-		if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-		{
-			map[x][y] = 4;
-			x = nextx, y = nexty;
-			break;
-		}
-		swap(); break;
-	case down:
-		if (x == H - 5)
-			goto one;
-		else
-			nextx = x + 1;
-		nexty = y;
-		if (map[x][y] == 1 || map[x][y] == 0)
-		{
-			if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-				;
-			else
-				map[nextx][nexty] = 3;
-			x = nextx, y = nexty;
-			break;
-		}
-		if (map[nextx][nexty] == 1 || map[nextx][nexty] == 0)
-		{
-			map[x][y] = 4;
-			x = nextx, y = nexty;
-			break;
-		}
-		swap();
-		break;
-	case ok:
-		if (map[x][y] == 0 || map[x][y] == 1)
-			goto one;
-		else
-		{
-			map[x][y] = 1;
-			clrscr();
-			drawMap();
-			sleep(5);
-			AI();
-			clrscr();
-			drawMap();
-			goto end;
-		}
-		break;
-	default:break;
-	}
-	clrscr();
-	drawMap();
-end:;
-}
-int iswin()
-{
-	int i, j, time = 1, xi, yi;
-	for (i = 4; i<H - 4; i++)
-		for (j = 4; j<H - 4; j++)
-		{
-			if (map[i][j] == 1 || map[i][j] == 0)
-			{
-				if (map[i][j] == 0)
-					wint = 0;
-				else
-					wint = 1;
-				xi = i, yi = j;
-				while (yi<H - 4 && yi>3)
-				{
-					yi++;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3)
-				{
-					yi--;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3)
-				{
-					xi++;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3)
-				{
-					xi--;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3 && yi<H - 4 && yi>3)
-				{
-					xi++, yi++;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3 && yi<H - 4 && yi>3)
-				{
-					xi++, yi--;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3 && yi<H - 4 && yi>3)
-				{
-					xi--, yi--;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-				xi = i, yi = j;
-				while (xi<H - 4 && xi>3 && yi<H - 4 && yi>3)
-				{
-					xi--, yi++;
-					if (map[xi][yi] == wint)
-					{
-						time++;
-						if (time == 5)
-							return 0;
-					}
-					else break;
-				}
-				time = 1;
-			}
-		}
-	return 1;
-}
-
-int zzz = 1;
-int rand()
-{
-	if (zzz == 1)
-	{
-		zzz++;
-		return 15;
-	}
-	else if (zzz == 2)
-	{
-		zzz++;
-		return 21;
-	}
-	else if (zzz == 3)
-	{
-		zzz++;
-		return 8;
-	}
-	else if (zzz == 4)
-	{
-		zzz++;
-		return 12;
-	}
-	else
-	{
-		return 3;
-	}
-}
-
-void compare()
-{
-	int i, j, score = 0, coord[H*H][2] = { 0 }, max = 0, t = 0;//t来计数
-	for (i = 4; i<H - 4; i++)
-	{
-		for (j = 4; j<H - 4; j++)
-		{
-
-			//遍历没一个格子
-			if (map[i][j] == 4)
-			{//如果当前是空格
-				if (map[i + 1][j] == now || map[i][j + 1] == now || map[i + 1][j + 1] == now || map[i - 1][j + 1] == now || map[i + 1][j - 1] == now || map[i - 1][j - 1] == now || map[i][j - 1] == now || map[i - 1][j] == now)   //这里八个方向遍历
-																																																									//如果当前的空格下个有子
-				{
-
-					//右活一
-					if (map[i][j + 1] == now&&map[i][j + 2] == 4)
-						score += 20;
-					//右死一
-					if (map[i][j + 1] == now&&map[i][j + 2] == 9 || map[i][j + 1] == now&&map[i][j + 2] == you)
-						score += 4;
-					//右活二
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == 4)
-						score += 400;
-					//右死二 
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == 9 || map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == you)
-						score += 90;
-					//右活三
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == 4)
-						score += 6000;
-					//右死三
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == you || map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == 9)
-						score += 800;
-					//右活四
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == now&&map[i][j + 5] == 4)
-						score += 20000;
-					//右死四
-					if (map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == now&&map[i][j + 5] == you || map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == now&&map[i][j + 4] == now&&map[i][j + 5] == 9)
-						score += 10000;
-					//左活一
-					if (map[i][j - 1] == now&&map[i][j - 2] == 4)
-						score += 20;
-					//左死一 
-					if (map[i][j - 1] == now&&map[i][j - 2] == you || map[i][j - 1] == 0 && map[i][j - 2] == 9)
-						score += 4;
-					//左活二
-					if (map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == 4)
-						score += 400;
-					//左死二
-					if (map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == you || map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == 9)
-						score += 90;
-					//左活三
-					if (map[i][j - 1] == you&&map[i][j - 2] == you&&map[i][j - 3] == you&&map[i][j - 4] == 4)
-						score += 6000;
-					//左死三 
-					if (map[i][j - 1] == 0 && map[i][j - 2] == 0 && map[i][j - 3] == 0 && map[i][j - 4] == you || map[i][j - 1] == 0 && &map[i][j - 2] == 0 && map[i][j - 3] == 0 && map[i][j - 4] == 9)
-						score += 800;
-					//左活四
-					if (map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == now&&map[i][j - 4] == now&&map[i][j - 5] == 4)
-						score += 20000;
-					//左死四 
-					if (map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == now&&map[i][j - 4] == now&&map[i][j - 5] == you || map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == now&&map[i][j - 4] == now&&map[i][j - 5] == 9)
-						score += 10000;
-					//下活一
-					if (map[i + 1][j] == now&&map[i + 2][j] == 4)
-						score += 20;
-					//下死一 
-					if (map[i + 1][j] == now&&map[i + 2][j] == you || map[i + 1][j] == now&&map[i + 2][j] == 9)
-						score += 4;
-					//下活二
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == 4)
-						score += 400;
-					//下死二
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == 9 || map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == you)
-						score += 90;
-					//下活三
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == 4)
-						score += 6000;
-					//下死三
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == you || map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == 9)
-						score += 800;
-					//下活四
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == now&&map[i + 5][j] == 4)
-						score += 20000;
-					//下死四
-					if (map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == now&&map[i + 5][j] == you || map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == now&&map[i + 4][j] == now&&map[i + 5][j] == 9)
-						score += 10000;
-					//上活一
-					if (map[i - 1][j] == now&&map[i - 2][j] == 4)
-						score += 20;
-					//上死一 
-					if (map[i - 1][j] == now&&map[i - 2][j] == you || map[i - 1][j] == now&&map[i - 2][j] == 9)
-						score += 4;
-					//上活二
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i][j - 3] == 4)
-						score += 400;
-					//上死二
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == 9 || map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == you)
-						score += 90;
-					//上活三
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == 4)
-						score += 6000;
-					//上死三
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == you || map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == 9)
-						score += 800;
-					//上活四
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == now&&map[i - 5][j] == 4)
-						score += 20000;
-					//上死四
-					if (map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == now&&map[i - 5][j] == you || map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == now&&map[i - 4][j] == now&&map[i - 5][j] == 9)
-						score += 10000;
-					//右下活一
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == 4)
-						score += 20;
-					//右下死一
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == 9 || map[i + 1][j + 1] == now&&map[i + 2][j + 2] == you)
-						score += 4;
-					//右下活二
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == 4)
-						score += 400;
-					//右下死二 
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == 9 || map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == you)
-						score += 90;
-					//右下活三
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == 4)
-						score += 6000;
-					//右下死三
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == you || map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == 9)
-						score += 800;
-					//右下活四
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == now&&map[i + 5][j + 5] == 4)
-						score += 20000;
-					//右下死四
-					if (map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == now&&map[i + 5][j + 5] == you || map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == now&&map[i + 4][j + 4] == now&&map[i + 5][j + 5] == 9)
-						score += 10000;
-					//左上活一
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == 4)
-						score += 20;
-					//左上死一
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == 9 || map[i - 1][j - 1] == now&&map[i - 2][j - 2] == you)
-						score += 4;
-					//左上活二
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == 4)
-						score += 400;
-					//左上死二 
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == 9 || map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == you)
-						score += 90;
-					//左上活三
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == 4)
-						score += 6000;
-					//左上死三
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == you || map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == 9)
-						score += 800;
-					//左上活四
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == now&&map[i - 5][j - 5] == 4)
-						score += 20000;
-					//左上死四
-					if (map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == now&&map[i - 5][j - 5] == you || map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == now&&map[i - 4][j - 4] == now&&map[i - 5][j - 5] == 9)
-						score += 10000;
-					//左下活一
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == 4)
-						score += 20;
-					//左下死一 
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == you || map[i + 1][j - 1] == now&&map[i + 2][j - 2] == 9)
-						score += 4;
-					//左下活二
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == 4)
-						score += 400;
-					//左下死二
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == 9 || map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == you)
-						score += 90;
-					//左下活三
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == 4)
-						score += 6000;
-					//左下死三
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == you || map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == 9)
-						score += 800;
-					//左下活四
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == now&&map[i + 5][j - 5] == 4)
-						score += 20000;
-					//左下死四
-					if (map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == now&&map[i + 5][j - 5] == you || map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == now&&map[i + 4][j - 4] == now&&map[i + 5][j - 5] == 9)
-						score += 10000;
-					//右上活一
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == 4)
-						score += 20;
-					//右上死一 
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == you || map[i - 1][j + 1] == now&&map[i - 2][j + 2] == 9)
-						score += 4;
-					//右上活二
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == 4)
-						score += 400;
-					//右上死二
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == 9 || map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == you)
-						score += 90;
-					//右上活三
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == 4)
-						score += 6000;
-					//右上死三
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == you || map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == 9)
-						score += 800;
-					//右上活四
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == now&&map[i - 5][j + 5] == 4)
-						score += 20000;
-					//右上死四
-					if (map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == now&&map[i - 5][j + 5] == you || map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == now&&map[i - 4][j + 4] == now&&map[i - 5][j + 5] == 9)
-						score += 10000;
-					if (
-						map[i][j - 1] == now&&map[i][j - 2] == now&&map[i][j - 3] == 4 && map[i][j + 1] == now&&map[i][j + 2] == 4 ||
-						map[i][j + 1] == now&&map[i][j + 2] == now&&map[i][j + 3] == 4 && map[i][j - 1] == now&&map[i][j - 2] == 4 ||
-						map[i - 1][j] == now&&map[i - 2][j] == now&&map[i - 3][j] == 4 && map[i + 1][j] == now&&map[i + 2][j] == 4 ||
-						map[i + 1][j] == now&&map[i + 2][j] == now&&map[i + 3][j] == 4 && map[i - 1][j] == now&&map[i - 2][j] == 4 ||
-						map[i - 1][j - 1] == now&&map[i - 2][j - 2] == now&&map[i - 3][j - 3] == 4 && map[i + 1][j + 1] == now&&map[i + 2][j + 2] == 4 ||
-						map[i + 1][j + 1] == now&&map[i + 2][j + 2] == now&&map[i + 3][j + 3] == 4 && map[i - 1][j - 1] == now&&map[i - 2][j - 2] == 4 ||
-						map[i + 1][j - 1] == now&&map[i + 2][j - 2] == now&&map[i + 3][j - 3] == 4 && map[i - 1][j + 1] == now&&map[i - 2][j + 2] == 4 ||
-						map[i - 1][j + 1] == now&&map[i - 2][j + 2] == now&&map[i - 3][j + 3] == 4 && map[i + 1][j - 1] == now&&map[i + 2][j - 2] == 4)
-						score += 5580;
-				}
-			}
-
-			//下活一	 	 
-			if (score<max)
-				score = 0;
-			if (score == max)
-			{
-				t++;
-				coord[t][0] = i, coord[t][1] = j;
-				score = 0;
-			}
-			if (score>max)
-			{
-				t = 0;
-				coord[t][0] = i, coord[t][1] = j;
-				max = score;
-				score = 0;
-			}
-		}
-	}
-
-	if (turn == 1)
-	{
-		maxm = max;
-		i = rand() % (t + 1);
-		maxmcoordx = coord[i][0];
-		maxmcoordy = coord[i][1];
-		turn = 2;
-		now = 1, you = 0;
-		compare();
-	}
-	else
-	{
-		maxy = max;
-		i = rand() % (t + 1);
-		maxycoordx = coord[i][0];
-		maxycoordy = coord[i][1];
-	}
-
-}
-void AI()
-{
-	now = 0, you = 1;
-	turn = 1;
-	compare();
-	if (maxm>maxy)
-		map[maxmcoordx][maxmcoordy] = 0;
-	if (maxm<maxy)
-		map[maxycoordx][maxycoordy] = 0;
-	if (maxm == maxy)
-	{
-		now = rand() % 1;
-		if (now == 1)
-			map[maxycoordx][maxycoordy] = 0;
-		else
-			map[maxmcoordx][maxmcoordy] = 0;
-
-
-	}
-	clrscr();
-	drawMap();
-}
-void Run(int fd_stdin)
-{
-	while (iswin())
-		playchoice(fd_stdin);
-	if (wint == 1)
-		printf("\n\t\t\tWhite Win！\n");
-	else
-		printf("\n\t\t\tBlack Win！\n");
-	printf("\t\t\tGameOver！\n\t\tpress any key for continue.\n");
-	//x=getch(fd_stdin);
-}
-void wuziChess(int fd_stdin)
-{
-	sleep(9);
-	clrscr();
-
-	redraw();
-	drawMap();
-	Run(fd_stdin);
-	//while(!kbhit())
-	listenerStart = 1;
-	while (listenerStart);
-	/*	while(listenerStart == 0)
-	{
-	redraw();
-	drawMap();
-	Run(fd_stdin);
-	}*/
-}
-
+/*****************************************************************************
+*                                2048 game
+*****************************************************************************/
 
 int num[4][4];
 int score, gameover, ifappear, gamew, gamef, gameb, move_2048;
@@ -3245,9 +1741,9 @@ void explation(int fd_stdin)
 	printf("PRESS 'up' 'down' 'left' 'right' OR 'W' 'A' 'S' 'D' to move the blocks\n");
 	printf("If the map is filled with blocks, you fail\n");
 	printf("If there's an 2048, you win\n");
-	printf("PRESS any key to return...\n");
-	sleep(5);
-	_getch(fd_stdin);
+	printf("after 5s to return...\n");
+	sleep(15);
+	getch(fd_stdin);
 	clrscr();
 	menu(fd_stdin);
 }
@@ -3256,9 +1752,9 @@ void gamefaile(int fd_stdin)
 	int i, j;
 	clrscr();
 	printf("\t\t*****************************************\t\t\n");
-	printf("\t\t*****************************************\n");
-	printf("\t\t******************you fail***************\n");
-	printf("\t\t*****************************************\n");
+	printf("\t\t*****************************************\t\t\n");
+	printf("\t\t******************you fail***************\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
 	printf("\t\t*****************************************\t\t\n");
 	printf("\t\t\t---------------------\n\t\t\t");
 	for (j = 0; j<4; j++)
@@ -3274,7 +1770,7 @@ void gamefaile(int fd_stdin)
 	printf("YOUR SCORE:%d, MOVES:%d\n", score, move_2048);
 	printf("PRESS any key to return...\n");
 	sleep(15);
-	_getch(fd_stdin);
+	getch(fd_stdin);
 
 	clear();
 	help();
@@ -3285,11 +1781,11 @@ void gamewin(int fd_stdin)
 	int i, j;
 	clrscr();
 	printf("\t\t*****************************************\t\t\n");
-	printf("\t\t*****************************************\n");
-	printf("\t\t*******************you win***************\n");
-	printf("\t\t*****************************************\n");
 	printf("\t\t*****************************************\t\t\n");
-	printf("\t\t\t---------------------\n\t\t\t");
+	printf("\t\t*******************you win***************\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
+	printf("\t\t\t---------------------------------------\t\t\n\t\t\t");
 	for (j = 0; j<4; j++)
 	{
 		for (i = 0; i<4; i++)
@@ -3303,7 +1799,7 @@ void gamewin(int fd_stdin)
 	printf("YOUR SCORE:%d, MOVES:%d\n", score, move_2048);
 	printf("PRESS any key to return...\n");
 	sleep(15);
-	_getch(fd_stdin);
+	getch(fd_stdin);
 	clrscr();
 	help();
 }
@@ -3312,13 +1808,13 @@ void prin()
 	int i, j;
 	clrscr();
 	printf("\t\t*****************************************\t\t\n");//输出界面
-	printf("\t\t*****************************************\n");
-	printf("\t\t******************START GAME***************\n");
-	printf("\t\t*****************************************\n");
 	printf("\t\t*****************************************\t\t\n");
-	printf("PRESS 'W' 'A' 'S' 'D' to move the blocks\n");//输出操作提示语句
-	printf("\t\t PRESS 'j' to return\n");
-	printf("\t\t\t---------------------\n\t\t\t");
+	printf("\t\t******************START GAME*************\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
+	printf("\t\t*PRESS 'W' 'A' 'S' 'D' to move the block*\t\t\n");//输出操作提示语句
+	printf("\t\t***********PRESS 'j' to return***********\t\t\n");
+	printf("\t\t-----------------------------------------\t\t\n\t\t\t");
 	for (j = 0; j<4; j++)                 //输出4*4的表格
 	{
 		for (i = 0; i<4; i++)
@@ -3356,12 +1852,6 @@ void appear()
 		num[a][b] = 2;
 	else
 		num[a][b] = 4;
-}
-void close_2048()
-{
-	sleep(9);
-	clear();
-	help();
 }
 void add(int *p)
 {
@@ -3596,10 +2086,10 @@ void menu(int fd_stdin)
 	char rdbuf[128];
 	clrscr();
 	printf("\t\t*****************************************\t\t\n");            //输出游戏菜单的图形
-	printf("\t\t*              1 START GAME              *\n");
-	printf("\t\t*              2 RULES                   *\n");
-	printf("\t\t*              3 EXIT GAME               *\n");
-	printf("\t\t*****************************************\n");
+	printf("\t\t*              1 START GAME             *\t\t\n");
+	printf("\t\t*              2 RULES                  *\t\t\n");
+	printf("\t\t*              3 EXIT GAME              *\t\t\n");
+	printf("\t\t*****************************************\t\t\n");
 	printf("ENTER 1 OR 2 OR 3:");
 	int r = read(fd_stdin, rdbuf, 70);
 	rdbuf[r] = 0;
@@ -3656,186 +2146,202 @@ void game2048(int fd_stdin)
 
 
 
-/*SokobanGame*/
+/*****************************************************************************
+*                             SokobanGame
+*****************************************************************************/
 
 PUBLIC SokobanGame = 0;
 
 int box_map[8][8] = {
-    { 1,1,1,1,1,1,1,1 },
-    { 1,0,0,0,1,0,0,1 },
-    { 1,0,1,0,1,3,4,1 },
-    { 1,0,0,0,0,3,4,1 },
-    { 1,0,1,0,1,3,4,1 },
-    { 1,0,0,0,1,0,0,1 },
-    { 1,1,1,1,1,2,0,1 },
-    { 0,0,0,0,1,1,1,1 }
+	{ 1,1,1,1,1,1,1,1 },
+	{ 1,0,0,0,1,0,0,1 },
+	{ 1,0,1,0,1,3,4,1 },
+	{ 1,0,0,0,0,3,4,1 },
+	{ 1,0,1,0,1,3,4,1 },
+	{ 1,0,0,0,1,0,0,1 },
+	{ 1,1,1,1,1,2,0,1 },
+	{ 0,0,0,0,1,1,1,1 }
 };
 
 void Sokoban(int fd_stdin)
 {
-    while (!check()&&!SokobanGame) {
-        clrscr();
-        draw_box_map();
-	sleep(3);
-        box_move(fd_stdin);
-    }
+	while (!check() && !SokobanGame) {
+		clrscr();
+		draw_box_map();
+		sleep(3);
+		box_move(fd_stdin);
+	}
 }
 
 void draw_box_map()
 {
-    int i, j;
-    for (i = 0; i < 8; i++) {
-        for (j = 0; j < 8; j++) {
-            switch (box_map[i][j]) {
-                case 0:
-                    printf(" ");
-                    break;
-                case 1:
-                    printf("#"); //wall
-                    break;
-                case 2:
-                    printf("i"); //man
-                    break;
-                case 3:
-                    printf("O"); //box
-                    break;
-                case 4:
-                    printf("X"); //box terminal
-                    break;
-                case 6:
-                    printf("I"); //man standing on the box terminal
-                    break;
-                case 7:
-                    printf("!");//box standing on the box terminal
-                    break;
-            }
-        }
-        printf("\n");
-    }
+	int i, j;
+	printf("\t\t*******************************************************\t\t\n");   //输出操作提示语句
+	printf("\t\t*********PRESS 'W' 'A' 'S' 'D' to move the man*********\t\t\n");
+	printf("\t\t***************PRESS 'J' to return*********************\t\t\n");
+	printf("\t\t******* #=wall   i=man   O=box   X=box terminal *******\t\t\n");
+	printf("\t\t*I=man on the box terminal   !=box on the box terminal*\t\t\n");
+	printf("\t\t*******************************************************\t\t\n");
+
+	for (i = 0; i < 8; i++) {
+		for (j = 0; j < 8; j++) {
+			switch (box_map[i][j]) {
+			case 0:
+				printf(" ");
+				break;
+			case 1:
+				printf("#"); //wall
+				break;
+			case 2:
+				printf("i"); //man
+				break;
+			case 3:
+				printf("O"); //box
+				break;
+			case 4:
+				printf("X"); //box terminal
+				break;
+			case 6:
+				printf("I"); //man standing on the box terminal
+				break;
+			case 7:
+				printf("!");//box standing on the box terminal
+				break;
+			}
+		}
+		printf("\n");
+	}
 }
 
 void box_move(int fd_stdin)
 {
-    int  x, y;
-    char op = getch(fd_stdin);
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-            if (box_map[i][j] == 2 || box_map[i][j] == 6) {
-                x = i;
-                y = j;
-            }
-        }
-    }
-    switch (op)
-    {
-        case 'w':
-        case 'W':
-        case 72:
-            if (box_map[x - 1][y] == 0 || box_map[x - 1][y] == 4)
-            {
-                box_map[x][y] -= 2;
-                box_map[x - 1][y] += 2;
-            }
-            else if (box_map[x - 1][y] == 3 || box_map[x - 1][y] == 7)
-            {
-                if (box_map[x - 2][y] == 0 || box_map[x - 2][y] == 4)
-                {
-                    box_map[x][y] -= 2;
-                    box_map[x - 1][y] -= 1;
-                    box_map[x - 2][y] += 3;
-                }
-            }
-            break;
-        case 's':
-        case 'S':
-        case 80:
-            if (box_map[x + 1][y] == 0 || box_map[x + 1][y] == 4)
-            {
-                box_map[x][y] -= 2;
-                box_map[x + 1][y] += 2;
-            }
-            else if (box_map[x + 1][y] == 3 || box_map[x + 1][y] == 7)
-            {
-                if (box_map[x + 2][y] == 0 || box_map[x + 2][y] == 4)
-                {
-                    box_map[x][y] -= 2;
-                    box_map[x + 1][y] -= 1;
-                    box_map[x + 2][y] += 3;
-                }
-            }
-            break;
-        case 'a':
-        case 'A':
-        case  75:
-            if (box_map[x][y - 1] == 0 || box_map[x][y - 1] == 4)
-            {
-                box_map[x][y] -= 2;
-                box_map[x][y - 1] += 2;
-            }
-            else if (box_map[x][y - 1] == 3 || box_map[x][y - 1] == 7)
-            {
-                if (box_map[x][y - 2] == 0 || box_map[x][y - 2] == 4)
-                {
-                    box_map[x][y] -= 2;
-                    box_map[x][y - 1] -= 1;
-                    box_map[x][y - 2] += 3;
-                }
-            }
-            break;
-        case 'd':
-        case 'D':
-        case  77:
-            if (box_map[x][y + 1] == 0 ||box_map[x][y + 1] == 4)
-            {
-                box_map[x][y] -= 2;
-                box_map[x][y + 1] += 2;
-            }
-            else if (box_map[x][y + 1] == 3 || box_map[x][y + 1] == 7)
-            {
-                if (box_map[x][y + 2] == 0 || box_map[x][y + 2] == 4)
-                {
-                    box_map[x][y] -= 2;
-                    box_map[x][y + 1] -= 1;
-                    box_map[x][y + 2] += 3;
-                }
-            }
-            break;
-       /* case e:
-            box_map[8][8] = {
-                { 1,1,1,1,1,1,1,1 },
-                { 1,0,0,0,1,0,0,1 },
-                { 1,0,1,0,1,3,4,1 },
-                { 1,0,0,0,0,3,4,1 },
-                { 1,0,1,0,1,3,4,1 },
-                { 1,0,0,0,1,0,0,1 },
-                { 1,1,1,1,1,2,0,1 },
-                { 0,0,0,0,1,1,1,1 }
-            };
-            SokobanGame = 0;
-            clrscr();
-            break;*/
-    }
+	int  x, y;
+	char op = getch(fd_stdin);
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (box_map[i][j] == 2 || box_map[i][j] == 6) {
+				x = i;
+				y = j;
+			}
+		}
+	}
+	switch (op)
+	{
+	case 'w':
+	case 'W':
+	case 72:
+		if (box_map[x - 1][y] == 0 || box_map[x - 1][y] == 4)
+		{
+			box_map[x][y] -= 2;
+			box_map[x - 1][y] += 2;
+		}
+		else if (box_map[x - 1][y] == 3 || box_map[x - 1][y] == 7)
+		{
+			if (box_map[x - 2][y] == 0 || box_map[x - 2][y] == 4)
+			{
+				box_map[x][y] -= 2;
+				box_map[x - 1][y] -= 1;
+				box_map[x - 2][y] += 3;
+			}
+		}
+		break;
+	case 's':
+	case 'S':
+	case 80:
+		if (box_map[x + 1][y] == 0 || box_map[x + 1][y] == 4)
+		{
+			box_map[x][y] -= 2;
+			box_map[x + 1][y] += 2;
+		}
+		else if (box_map[x + 1][y] == 3 || box_map[x + 1][y] == 7)
+		{
+			if (box_map[x + 2][y] == 0 || box_map[x + 2][y] == 4)
+			{
+				box_map[x][y] -= 2;
+				box_map[x + 1][y] -= 1;
+				box_map[x + 2][y] += 3;
+			}
+		}
+		break;
+	case 'a':
+	case 'A':
+	case  75:
+		if (box_map[x][y - 1] == 0 || box_map[x][y - 1] == 4)
+		{
+			box_map[x][y] -= 2;
+			box_map[x][y - 1] += 2;
+		}
+		else if (box_map[x][y - 1] == 3 || box_map[x][y - 1] == 7)
+		{
+			if (box_map[x][y - 2] == 0 || box_map[x][y - 2] == 4)
+			{
+				box_map[x][y] -= 2;
+				box_map[x][y - 1] -= 1;
+				box_map[x][y - 2] += 3;
+			}
+		}
+		break;
+	case 'd':
+	case 'D':
+	case  77:
+		if (box_map[x][y + 1] == 0 || box_map[x][y + 1] == 4)
+		{
+			box_map[x][y] -= 2;
+			box_map[x][y + 1] += 2;
+		}
+		else if (box_map[x][y + 1] == 3 || box_map[x][y + 1] == 7)
+		{
+			if (box_map[x][y + 2] == 0 || box_map[x][y + 2] == 4)
+			{
+				box_map[x][y] -= 2;
+				box_map[x][y + 1] -= 1;
+				box_map[x][y + 2] += 3;
+			}
+		}
+		break;
+	case 'j':
+		clrscr();
+		SokobanGame = 1;
+		help();
+		break;
+
+
+		/* case e:
+		box_map[8][8] = {
+		{ 1,1,1,1,1,1,1,1 },
+		{ 1,0,0,0,1,0,0,1 },
+		{ 1,0,1,0,1,3,4,1 },
+		{ 1,0,0,0,0,3,4,1 },
+		{ 1,0,1,0,1,3,4,1 },
+		{ 1,0,0,0,1,0,0,1 },
+		{ 1,1,1,1,1,2,0,1 },
+		{ 0,0,0,0,1,1,1,1 }
+		};
+		SokobanGame = 0;
+		clrscr();
+		break;*/
+	}
 }
 
 int check()
 {
-    int k = 0;
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            if (box_map[i][j] == 3)
-                k++;
-        }
-    }
-    if (k == 0) {
-        printf("===========================================================\n");
-        printf("======================Congratulations======================\n");
-        return 1;
-    }
-    else {
-        return 0;
-    }
+	int k = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		for (int j = 0; j < 8; j++)
+		{
+			if (box_map[i][j] == 3)
+				k++;
+		}
+	}
+	if (k == 0) {
+		printf("===========================================================\n");
+		printf("======================Congratulations======================\n");
+		return 1;
+	}
+	else {
+		return 0;
+	}
 }
 
 
