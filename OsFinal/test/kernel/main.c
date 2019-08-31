@@ -1156,21 +1156,11 @@ void ResumeProcess(int num)
 	}
 	*/
 	proc_table[num].p_runable = 1;
-
-	out_char(tty_table[1].console, '\n');
-	out_char(tty_table[1].console, '\n');
-
-
 	ProcessManage();
 }
 void pauseProcess(int num)
 {
 	proc_table[num].p_runable = 0;
-
-	out_char(tty_table[1].console, '\n');
-	out_char(tty_table[1].console, '\n');
-
-
 	ProcessManage();
 }
 void UpPriority(int num)
@@ -1185,14 +1175,12 @@ void UpPriority(int num)
 	{
 		proc_table[num].priority = proc_table[num].priority + 10;
 		proc_table[num].ticks = proc_table[num].priority;
-		out_char(tty_table[1].console, 'A');
-		out_char(tty_table[1].console, '\n');
 	}
 	ProcessManage();
 }
 void DownPriority(int num)
 {
-	if (proc_table[num].priority <= 50)
+	if (proc_table[num].priority <= 5)
 	{
 		printf("!!!!you can not Down the priority!!!!\n");
 	}
@@ -1200,8 +1188,6 @@ void DownPriority(int num)
 	{
 		proc_table[num].priority = proc_table[num].priority - 10;
 		proc_table[num].ticks = proc_table[num].priority;
-		out_char(tty_table[1].console, '\n');
-		out_char(tty_table[1].console, '\n');
 	}
 	ProcessManage();
 }
@@ -1542,9 +1528,7 @@ void TestA()
 				}
 				else if (strcmp(rdbuf, "run") == 0)
 				{
-					out_char(tty_table[1].console, '\n');
-					out_char(tty_table[1].console, '\n');
-
+				
 					proc_table[6].p_runable = 1;
 					proc_table[7].p_runable = 1;
 					proc_table[8].p_runable = 1;
@@ -1557,6 +1541,8 @@ void TestA()
 					{
 						printProcess();
 					}
+					out_char(tty_table[1].console, '\n');
+					out_char(tty_table[1].console, '\n');
 					proc_table[6].p_runable = 0;
 					proc_table[7].p_runable = 0;
 					proc_table[8].p_runable = 0;
